@@ -14,3 +14,4 @@ pnpm dev
 bun dev
 ```
 https://www.youtube.com/watch?v=OHvfgaDl-yY
+44:30
