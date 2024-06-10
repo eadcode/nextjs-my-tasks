@@ -1,6 +1,7 @@
 "use client";
+
 import React from "react";
-import { GlobalProvider } from "../context/globalProvider";
+import { GlobalProvider } from "@/app/context/globalProvider";
 import { Toaster } from "react-hot-toast";
 
 interface Props {
@@ -16,7 +17,7 @@ function ContextProvider({ children }: Props) {
         }, 250);
     }, []);
 
-    if (! isReady) {
+    if (!isReady) {
         return (
             <div className="w-full h-full flex items-center justify-center">
                 <span className="loader"></span>
@@ -27,7 +28,7 @@ function ContextProvider({ children }: Props) {
     return (
         <GlobalProvider>
             <Toaster />
-            { children }
+            {children}
         </GlobalProvider>
     );
 }

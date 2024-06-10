@@ -9,19 +9,19 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import Button from "../Button/Button";
 import { arrowLeft, bars, logout } from "@/app/utils/Icons";
-// import { UserButton, useClerk, useUser } from "@clerk/nextjs";
+import { UserButton, useClerk, useUser } from "@clerk/nextjs";
 
 const Sidebar = () => {
     const { theme, collapsed, collapseMenu } = useGlobalState();
-    // const { signOut } = useClerk();
+    const { signOut } = useClerk();
 
-    // const { user } = useUser();
+    const { user } = useUser();
 
-    // const { firstName, lastName, imageUrl } = user || {
-    //     firstName: "",
-    //     lastName: "",
-    //     imageUrl: "",
-    // };
+    const { firstName, lastName, imageUrl } = user || {
+        firstName: "",
+        lastName: "",
+        imageUrl: "",
+    };
 
     const router = useRouter();
     const pathname = usePathname();
@@ -37,15 +37,15 @@ const Sidebar = () => {
             </button>
             <div className="profile">
                 <div className="profile-overlay"></div>
-                {/*<div className="image">*/}
-                {/*    <Image width={ 70 } height={ 70 } src={ imageUrl } alt="profile" />*/}
-                {/*</div>*/}
-                {/*<div className="user-btn absolute z-20 top-0 w-full h-full">*/}
-                {/*    <UserButton />*/}
-                {/*</div>*/}
-                {/*<h1 className="capitalize">*/}
-                {/*    { firstName } { lastName }*/}
-                {/*</h1>*/}
+                <div className="image">
+                    <Image width={ 70 } height={ 70 } src={ imageUrl } alt="profile" />
+                </div>
+                <div className="user-btn absolute z-20 top-0 w-full h-full">
+                    <UserButton />
+                </div>
+                <h1 className="capitalize">
+                    { firstName } { lastName }
+                </h1>
             </div>
             <ul className="nav-items">
                 { menu.map((item) => {
@@ -73,9 +73,9 @@ const Sidebar = () => {
                     fw={ "500" }
                     fs={ "1.2rem" }
                     icon={ logout }
-                    // click={ () => {
-                    //     signOut(() => router.push("/signin"));
-                    // } }
+                    click={ () => {
+                        signOut(() => router.push("/signin"));
+                    } }
                 />
             </div>
         </SidebarStyled>
@@ -149,7 +149,7 @@ const SidebarStyled = styled.nav<{ collapsed: boolean }>`
   }
 
   .profile {
-    margin: 1.5rem;
+    margin: 1.2rem;
     padding: 1rem 0.8rem;
     position: relative;
 
