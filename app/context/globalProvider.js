@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
 import { createContext, useState, useContext, useEffect } from 'react';
-import axios from "axios";
-import toast from "react-hot-toast";
-import { useUser } from "@clerk/nextjs";
-import themes from "@/app/context/themes";
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import { useUser } from '@clerk/nextjs';
+import themes from '@/app/context/themes';
 
 export const GlobalContext = createContext();
 export const GlobalUpdateContext = createContext();
@@ -30,13 +30,14 @@ export const GlobalProvider = ({ children }) => {
     };
 
     const collapseMenu = () => {
-        setCollapsed(!collapsed);
+        setCollapsed(! collapsed);
     };
 
     const allTasks = async () => {
         setIsLoading(true);
+
         try {
-            const res = await axios.get("/api/tasks");
+            const res = await axios.get('/api/tasks');
 
             const sorted = res.data.sort((a, b) => {
                 return (
@@ -54,13 +55,13 @@ export const GlobalProvider = ({ children }) => {
 
     const deleteTask = async (id) => {
         try {
-            const res = await axios.delete(`/api/tasks/${id}`);
-            toast.success("Task deleted");
+            const res = await axios.delete(`/api/tasks/${ id }`);
+            toast.success('Task deleted');
 
             allTasks();
         } catch (error) {
             console.log(error);
-            toast.error("Something went wrong");
+            toast.error('Something went wrong');
         }
     };
 
@@ -68,12 +69,12 @@ export const GlobalProvider = ({ children }) => {
         try {
             const res = await axios.put(`/api/tasks`, task);
 
-            toast.success("Task updated");
+            toast.success('Task updated');
 
             allTasks();
         } catch (error) {
             console.log(error);
-            toast.error("Something went wrong");
+            toast.error('Something went wrong');
         }
     };
 
@@ -82,12 +83,14 @@ export const GlobalProvider = ({ children }) => {
     const incompleteTasks = tasks.filter((task) => task.isCompleted === false);
 
     useEffect(() => {
-        if (user) allTasks();
+        if (user) {
+            allTasks();
+        }
     }, [user]);
 
     return (
         <GlobalContext.Provider
-            value={{
+            value={ {
                 theme,
                 tasks,
                 deleteTask,
@@ -102,10 +105,10 @@ export const GlobalProvider = ({ children }) => {
                 allTasks,
                 collapsed,
                 collapseMenu,
-            }}
+            } }
         >
-            <GlobalUpdateContext.Provider value={{}}>
-                {children}
+            <GlobalUpdateContext.Provider value={ {} }>
+                { children }
             </GlobalUpdateContext.Provider>
         </GlobalContext.Provider>
     );

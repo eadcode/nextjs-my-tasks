@@ -3,9 +3,9 @@ import React from "react";
 import styled from "styled-components";
 import { useGlobalState } from "@/app/context/globalProvider";
 import { add, plus } from "@/app/utils/Icons";
-// import CreateContent from "../Modals/CreateContent";
-// import TaskItem from "../TaskItem/TaskItem";
-// import Modal from "../Modals/Modal";
+import CreateContent from "@/app/Components/Modals/CreateContent";
+import Modal from "@/app/Components/Modals/Modal";
+import TaskItem from "@/app/Components/Tasks/TaskItem";
 
 interface Props {
     title: string;
@@ -17,7 +17,33 @@ const Tasks = ({ title, tasks }: Props) => {
 
     return (
         <TaskStyled theme={ theme }>
-            Tasks
+            { modal && <Modal content={ <CreateContent /> } /> }
+
+            <h1>{ title }</h1>
+
+            <button className="btn-rounded" onClick={ openModal }>
+                { plus }
+            </button>
+
+            <div className="tasks grid">
+                {
+                    tasks.map((task) => (
+                        <TaskItem
+                            key={ task.id }
+                            title={ task.title }
+                            description={ task.description }
+                            date={ task.date }
+                            isCompleted={ task.isCompleted }
+                            id={ task.id }
+                        />
+                    ))
+                }
+
+                <button className="create-task" onClick={ openModal }>
+                    { add }
+                    Add New Task
+                </button>
+            </div>
         </TaskStyled>
     );
 };
